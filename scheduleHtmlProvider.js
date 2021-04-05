@@ -85,7 +85,7 @@ function scheduleHtmlProvider(iframeContent = "", frameContent = "") {
             没有获取到课表哦
             导入流程:>>输入账号密码登陆 >> 
             然后点击"一键导入"`
-        alert(TriPrompto)
+        	alert(TriPrompto)
 	}
 
 	let nowDate = getNowFormatDate()
