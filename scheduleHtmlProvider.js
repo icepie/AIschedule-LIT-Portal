@@ -1,3 +1,10 @@
+/*************************************************************************************
+* Author : icepie
+* last updated @ 2021/04/06 14:45
+* Any question or assistances please contact: mailto:icepie.dev@gmail.com
+* this project has been updated to Github:
+** https://github.com/icepie/AIschedule-LIT-Portal
+***************************************************************************************/
 function getNowFormatDate() {
     var date = new Date();
     var seperator = "-";
@@ -20,20 +27,17 @@ function getStuID() {
       http.open('POST', 'https://sec.lit.edu.cn/webvpn/LjIwNi4xNzAuMjE4LjE2Mi4xNjg=/LjIxMS4xNzUuMTQ4LjE1OC4xNTguMTcwLjk0LjE1Mi4xNTAuMjE2LjEwMi4xOTcuMjA5/portal/myCenter/getMemberInfoForCurrentMember?vpn-0',false)
       http.send()
       let member = JSON.parse(http.responseText);
-      console.log(member)
+      // console.log(member)
       if (member.obj == null){
           return null
       }
       return member.obj.memberId
 }
 
-
 function scheduleHtmlProvider(iframeContent = "", frameContent = "") {
 
       let stuid = getStuID()
 
-      // 抛弃了从 html 获取, 因为课表不完整...
-      // var sch = document.getElementById("wyy3")
       if (stuid == null) {
             let TriPrompto = `
             没有获取到课表哦
@@ -46,7 +50,7 @@ function scheduleHtmlProvider(iframeContent = "", frameContent = "") {
 
       let date = getNowFormatDate()
 
-      console.log(stuid, date)
+      // console.log(stuid, date)
 
       let http = new XMLHttpRequest()
       http.open('POST', '/webvpn/LjIwNi4xNzAuMjE4LjE2Mi4xNjg=/LjIxMS4xNzUuMTQ4LjE1OC4xNTguMTcwLjk0LjE1Mi4xNTAuMjE2LjEwMi4xOTcuMjA5/microapplication/api/course/getCourse?vpn-0', false)
