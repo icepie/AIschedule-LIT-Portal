@@ -5,6 +5,7 @@
 * this project has been updated to Github:
 ** https://github.com/icepie/AIschedule-LIT-Portal
 ***************************************************************************************/
+
 function getNowFormatDate() {
     var date = new Date();
     var seperator = "-";
@@ -20,7 +21,6 @@ function getNowFormatDate() {
     var currentdate = year + seperator + month + seperator + strDate
     return currentdate;
 }
-
 
 function getStuID() {
       let http = new XMLHttpRequest()
