@@ -5,230 +5,104 @@
  * this project has been updated to Github:
  ** https://github.com/icepie/AIschedule-LIT-Portal
  ***************************************************************************************/
-function week2Day(day) {
-    switch (day) {
-    case "一":
-        return 1;
-    case "二":
-        return 2;
-    case "三":
-        return 3;
-    case "四":
-        return 4;
-    case "五":
-        return 5;
-    case "六":
-        return 6;
-    case "日":
-        return 7;
-    }
-    return 7
+function getNowFormatDate() {
+	var date = new Date();
+	var seperator = "-";
+	var year = date.getFullYear();
+	var month = date.getMonth() + 1;
+	var strDate = date.getDate();
+	if (month >= 1 && month <= 9) {
+		month = "0" + month;
+	}
+	if (strDate >= 0 && strDate <= 9) {
+		strDate = "0" + strDate;
+	}
+	var currentdate = year + seperator + month + seperator + strDate
+	return currentdate;
 }
 
-// "7-9,10-11" -> [{section:7},{section:8},{section:9},{section:10},{section:11}]
-function multisectionText2List(text) {
-    let sections = [];
-    let splited = text.split(",");
-    for (let t of splited) {
-        let sec = sectionText2List(t);
-        sections = sections.concat(sec);
-    }
-    return sections;
+function getNowFormatDateNextWeek() {
+	var date = new Date();
+	var seperator = "-";
+	var year = date.getFullYear();
+	var month = date.getMonth() + 1;
+	var strDate = date.getDate() + 7;
+	if (month >= 1 && month <= 9) {
+		month = "0" + month;
+	}
+	if (strDate >= 0 && strDate <= 9) {
+		strDate = "0" + strDate;
+	}
+	var currentdate = year + seperator + month + seperator + strDate
+	return currentdate;
 }
 
-// "7-9" -> [{section:7},{section:8},{section:9}]
-function sectionText2List(text) {
-    let sections = [];
-
-    let splited = text.split("-");
-    if (splited.length == 1) {
-        sections.push({
-            section: Number(text)
-        });
-        return sections;
-    }
-    let start = Number(splited[0]);
-    let end = Number(splited[1]);
-    for (let i = start; i <= end; i++) {
-        sections.push({
-            section: i
-        });
-    }
-    return sections;
+function getStuID() {
+	let http = new XMLHttpRequest() http.open('POST', 'https://sec.lit.edu.cn/webvpn/LjIwNi4xNzAuMjE4LjE2Mi4xNjg=/LjIxMS4xNzUuMTQ4LjE1OC4xNTguMTcwLjk0LjE1Mi4xNTAuMjE2LjEwMi4xOTcuMjA5/portal/myCenter/getMemberInfoForCurrentMember?vpn-0', false) http.send();
+	let member = JSON.parse(http.responseText);
+	// console.log(member)
+	if (member.obj == null) {
+		return null
+	}
+	return member.obj.memberId
 }
 
-// "7-9,10-11" -> [7,8,9,10,11]
-function multiWeekText2List(text, mode = 0) {
-    let sections = [];
-    let splited = text.split(",");
-    for (let t of splited) {
-        let sec = weekText2List(t, mode);
-        sections = sections.concat(sec);
-    }
-    return sections;
+function getCourse(stuid, date) {
+	let http = new XMLHttpRequest() http.open('POST', '/webvpn/LjIwNi4xNzAuMjE4LjE2Mi4xNjg=/LjIxMS4xNzUuMTQ4LjE1OC4xNTguMTcwLjk0LjE1Mi4xNTAuMjE2LjEwMi4xOTcuMjA5/microapplication/api/course/getCourse?vpn-0', false);
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	http.send('userName=' + stuid + '&currentTime=' + date + '&role=1');
+	return JSON.parse(http.responseText).obj;
 }
 
-// "7-9" -> [7,8,9]
-// mode: 0, 1, 2
-function weekText2List(text, mode = 0) {
-    let sections = [];
-    let splited = text.split("-");
-    if (splited.length == 1) {
-        sections.push(Number(text));
-        return sections;
-    }
-    let start = Number(splited[0]);
-    let end = Number(splited[1]);
-    for (let i = start; i <= end; i++) {
-        if (mode == 1 && i % 2 == 1) {
-            sections.push(i);
-        } else if (mode == 2 && i % 2 == 0) {
-            sections.push(i);
-        } else if (mode == 0) {
-            sections.push(i);
-        }
-
-    }
-    return sections;
+function distinct(a, b) {
+	let obj = a.concat(b) var uniques = [];
+	var stringify = {};
+	for (var i = 0; i < obj.length; i++) {
+		var keys = Object.keys(obj[i]);
+		keys.sort(function(a, b) {
+			return (Number(a) - Number(b));
+		});
+		var str = '';
+		for (var j = 0; j < keys.length; j++) {
+			str += JSON.stringify(keys[j]);
+			str += JSON.stringify(obj[i][keys[j]]);
+		}
+		if (!stringify.hasOwnProperty(str)) {
+			uniques.push(obj[i]);
+			stringify[str] = true;
+		}
+	}
+	uniques = uniques;
+	return uniques;
 }
 
-let sectionTimeSummer = [{
-    section: 1,
-    startTime: "08:00",
-    endTime: "08:45"
-}, {
-    section: 2,
-    startTime: "08:55",
-    endTime: "09:40"
-}, {
-    section: 3,
-    startTime: "10:00",
-    endTime: "10:45"
-}, {
-    section: 4,
-    startTime: "10:55",
-    endTime: "11:40"
-}, {
-    section: 5,
-    startTime: "14:30",
-    endTime: "15:15"
-}, {
-    section: 6,
-    startTime: "15:25",
-    endTime: "16:10"
-}, {
-    section: 7,
-    startTime: "16:30",
-    endTime: "17:15"
-}, {
-    section: 8,
-    startTime: "17:25",
-    endTime: "18:10"
-}, {
-    section: 9,
-    startTime: "19:00",
-    endTime: "19:45"
-}, {
-    section: 10,
-    startTime: "19:55",
-    endTime: "20:40"
-}, ]
+function scheduleHtmlProvider(iframeContent = "", frameContent = "") {
 
-let sectionTimeWinter = [{
-    section: 1,
-    startTime: "08:00",
-    endTime: "08:45"
-}, {
-    section: 2,
-    startTime: "08:55",
-    endTime: "09:40"
-}, {
-    section: 3,
-    startTime: "10:00",
-    endTime: "10:45"
-}, {
-    section: 4,
-    startTime: "10:55",
-    endTime: "11:40"
-}, {
-    section: 5,
-    startTime: "14:30",
-    endTime: "15:15"
-}, {
-    section: 6,
-    startTime: "15:25",
-    endTime: "16:10"
-}, {
-    section: 7,
-    startTime: "16:30",
-    endTime: "17:15"
-}, {
-    section: 8,
-    startTime: "17:25",
-    endTime: "18:10"
-}, {
-    section: 9,
-    startTime: "19:00",
-    endTime: "19:45"
-}, {
-    section: 10,
-    startTime: "19:55",
-    endTime: "20:40"
-}, ]
+	let stuid = getStuID()
 
-function scheduleHtmlParser(html) {
+	if (stuid == null) {
+		let TriPrompto = `
+            没有获取到课表哦
+            导入流程:>>输入账号密码登陆 >> 
+            然后点击"一键导入"`
+        alert(TriPrompto)
+	}
 
-    let courseInfoList = []
+	let nowDate = getNowFormatDate()
 
-    jsonData = JSON.parse(html);
+	let nextWeekDate = getNowFormatDateNextWeek()
 
-    //console.log(jsonData)
+	// 获取当前周课表
+	let nowCourseJson = getCourse(stuid, nowDate)
 
-    // 遍历
-    for (var index in jsonData) {
+	//console.log(nowCourseJson)
+	// 获取当前下周课表
+	let nextWeekcourseJson = getCourse(stuid, nextWeekDate)
 
-        let raw = jsonData[index]
+	//console.log(nextWeekcourseJson)
+	// 整合单双周课表
+	let courseJson = distinct(nowCourseJson, nextWeekcourseJson)
 
-        // console.log(raw)
-
-        // 课程详情
-        let courseName = raw.courseName
-        let coursePosition = raw.courseAdressCode
-        let courseTeacher = raw.courseTeacherName
-
-        // console.log(raw.courseWeekly)
-
-        let courseWeeks = multiWeekText2List(raw.courseWeekly, raw.courseSingleDoubleWeek)
-        let courseDay = week2Day(raw.courseDate)
-        let courseSections = multisectionText2List(raw.courseSection)
-
-        // 创建课程
-        let courseInfo = {
-            name: courseName,
-            position: coursePosition,
-            teacher: courseTeacher,
-            weeks: courseWeeks,
-            day: courseDay,
-            sections: courseSections
-        }
-
-        // 添加到课程列表
-        courseInfoList.push(courseInfo)
-    }
-
-    // 判断月份 使用对应作息时间
-    let sectionTime = sectionTimeSummer
-    let today = new Date();
-    let month = today.getMonth();
-    if (month >= 10 || month < 5) {
-        sectionTime = sectionTimeWinter
-    }
-
-    // 生成最终结果
-    let result = {
-        courseInfos: courseInfoList,
-        sectionTimes: sectionTime
-    }
-
-    return result
+	//console.log(courseJson)
+	return JSON.stringify(courseJson)
 }
