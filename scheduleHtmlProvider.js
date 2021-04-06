@@ -38,7 +38,7 @@ function getNowFormatDateNextWeek() {
 }
 
 function getStuID() {
-	let http = new XMLHttpRequest() http.open('POST', 'https://sec.lit.edu.cn/webvpn/LjIwNi4xNzAuMjE4LjE2Mi4xNjg=/LjIxMS4xNzUuMTQ4LjE1OC4xNTguMTcwLjk0LjE1Mi4xNTAuMjE2LjEwMi4xOTcuMjA5/portal/myCenter/getMemberInfoForCurrentMember?vpn-0', false) http.send();
+	let http = new XMLHttpRequest() http.open('POST', '/webvpn/LjIwNi4xNzAuMjE4LjE2Mi4xNjg=/LjIxMS4xNzUuMTQ4LjE1OC4xNTguMTcwLjk0LjE1Mi4xNTAuMjE2LjEwMi4xOTcuMjA5/portal/myCenter/getMemberInfoForCurrentMember?vpn-0', false) http.send();
 	let member = JSON.parse(http.responseText);
 	// console.log(member)
 	if (member.obj == null) {
