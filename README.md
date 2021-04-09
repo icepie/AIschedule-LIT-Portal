@@ -3,8 +3,8 @@
 
 小爱课程表-洛阳理工学院-智慧校园门户系统
 
-[![](https://img.shields.io/badge/dynamic/json?color=blue&label=%E5%BC%80%E5%8F%91%E8%80%85&query=%24.coderName&url=https%3A%2F%2Fopen-schedule.ai.xiaomi.com%2Fapi%2Fcoder%3Ftb_id%3D39507%26amp?style=plastic)](https://blog.icepie.net/)
-![](https://img.shields.io/badge/dynamic/json?color=blueviolet&label=%E4%BD%BF%E7%94%A8%E4%BA%BA%E6%95%B0&query=%24.usedNum&url=https%3A%2F%2Fopen-schedule.ai.xiaomi.com%2Fapi%2Fcoder%3Ftb_id%3D36075%26amp?style=plastic)
+[![](https://img.shields.io/badge/dynamic/json?color=blue&label=%E5%BC%80%E5%8F%91%E8%80%85&query=%24.coderName&url=https%3A%2F%2Fopen-schedule.ai.xiaomi.com%2Fapi%2Fcoder%3Ftb_id%3D39595%26amp?style=plastic)](https://blog.icepie.net/)
+![](https://img.shields.io/badge/dynamic/json?color=blueviolet&label=%E4%BD%BF%E7%94%A8%E4%BA%BA%E6%95%B0&query=%24.usedNum&url=https%3A%2F%2Fopen-schedule.ai.xiaomi.com%2Fapi%2Fcoder%3Ftb_id%3D39595%26amp?style=plastic)
 [![QQ Group](https://img.shields.io/badge/QQ%20群-647027400-red.svg)](https://jq.qq.com/?_wv=1027&k=lz0XyN86)
 [![TG Group](https://img.shields.io/badge/TG%20群-lit_edu-blue.svg)](https://t.me/lit_edu)
 
@@ -27,6 +27,10 @@
 - 成功登录门户系统后直接点击导入即可 (无需点击到课表页面)
 
 ## 更新日志
+
+- 39595
+  - 修复一些错误
+  - 课表更加完整
 
 - 39507
   - 实现了完整导入课表功能
